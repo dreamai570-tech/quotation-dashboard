@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Hassan Aluminium — Quotation Hub</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0f172a">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f172a'/><text x='50' y='68' font-size='52' text-anchor='middle' fill='%23fbbf24'>H</text></svg>">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+  html, body { height: 100%; }
+  body { font-family: -apple-system, 'Segoe UI', Roboto, Arial, sans-serif; background: #0f172a; color: #f1f5f9; }
+  /* ---------- Dashboard ---------- */
+  #dashboard { min-height: 100%; display: flex; flex-direction: column; align-items: center; padding: 28px 18px 40px; }
+  .brand { text-align: center; margin: 26px 0 8px; }
+  .brand .logo { width: 72px; height: 72px; border-radius: 18px; background: linear-gradient(135deg, #fbbf24, #b45309); display: flex; align-items: center; justify-content: center; font-size: 38px; font-weight: 800; color: #0f172a; margin: 0 auto 12px; box-shadow: 0 8px 24px rgba(251,191,36,.25); }
+  .brand h1 { font-size: 24px; letter-spacing: .5px; }
+  .brand p { color: #94a3b8; font-size: 14px; margin-top: 6px; }
+  .cards { width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 14px; margin-top: 26px; }
+  .app-card { display: flex; align-items: center; gap: 16px; width: 100%; padding: 18px; border: 1px solid #1e293b; border-radius: 16px; background: #1e293b; color: #f1f5f9; cursor: pointer; text-align: left; transition: transform .08s, border-color .15s; }
+  .app-card:active { transform: scale(.98); border-color: #fbbf24; }
+  .app-card .icon { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 26px; flex-shrink: 0; }
+  .app-card .txt h2 { font-size: 17px; margin-bottom: 4px; }
+  .app-card .txt p { font-size: 13px; color: #94a3b8; line-height: 1.4; }
+  .app-card .go { margin-left: auto; color: #fbbf24; font-size: 22px; flex-shrink: 0; }
+  .foot { margin-top: auto; padding-top: 30px; color: #475569; font-size: 12px; text-align: center; }
+  /* ---------- App view ---------- */
+  #appview { height: 100%; display: flex; flex-direction: column; }
+  #appview[hidden], #dashboard[hidden] { display: none !important; }
+  .topbar { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: #0f172a; border-bottom: 1px solid #1e293b; }
+  #backBtn { background: #1e293b; color: #fbbf24; border: 1px solid #334155; border-radius: 10px; padding: 9px 14px; font-size: 15px; cursor: pointer; }
+  #backBtn:active { background: #334155; }
+  #appTitle { font-size: 16px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  #framewrap { position: relative; flex: 1; }
+  #appframe { width: 100%; height: 100%; border: 0; background: #fff; display: block; }
+  #loader { position: absolute; inset: 0; display: flex; flex-direction: column; gap: 12px; align-items: center; justify-content: center; background: #0f172a; color: #94a3b8; font-size: 14px; }
+  .spin { width: 38px; height: 38px; border: 4px solid #1e293b; border-top-color: #fbbf24; border-radius: 50%; animation: sp 0.8s linear infinite; }
+  @keyframes sp { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<div id="dashboard">
+  <div class="brand">
+    <div class="logo">H</div>
+    <h1>Hassan Aluminium</h1>
+    <p>Quotation Hub — apni app chunein</p>
+  </div>
+  <div class="cards">
+    <button class="app-card" id="card-aluminium" data-app="aluminium">
+      <div class="icon" style="background:#1d4ed8;">🪟</div>
+      <div class="txt"><h2>Aluminium Quotation</h2><p>Windows, doors aur aluminium kaam ka quotation banayein</p></div>
+      <div class="go">›</div>
+    </button>
+    <button class="app-card" id="card-glass" data-app="glass">
+      <div class="icon" style="background:#0e7490;">🔷</div>
+      <div class="txt"><h2>Glass Quotation</h2><p>Glass aur aluminium glass kaam ka quotation banayein</p></div>
+      <div class="go">›</div>
+    </button>
+    <button class="app-card" id="card-bill" data-app="bill">
+      <div class="icon" style="background:#15803d;">🧾</div>
+      <div class="txt"><h2>Quotation Bill (Mobile)</h2><p>Bill banayein, PDF nikalein, WhatsApp pe bhejein</p></div>
+      <div class="go">›</div>
+    </button>
+  </div>
+  <div class="foot">Hassan Aluminium • Gulyana</div>
+</div>
+
+<div id="appview" hidden>
+  <div class="topbar">
+    <button id="backBtn">‹ Dashboard</button>
+    <span id="appTitle"></span>
+  </div>
+  <div id="framewrap">
+    <div id="loader"><div class="spin"></div><div>App khul rahi hai…</div></div>
+    <iframe id="appframe" title="app" allow="clipboard-write"></iframe>
+  </div>
+</div>
+
+<script>
+var APPS = {
+  aluminium: { title: 'Aluminium Quotation', url: 'https://dreamai570-tech.github.io/aluminium-quotation-pro/' },
+  glass:     { title: 'Glass Quotation',     url: 'https://dreamai570-tech.github.io/glass-quotation-pro/' },
+  bill:      { title: 'Quotation Bill (Mobile)', url: 'https://dreamai570-tech.github.io/aluminium-quote-summary/' }
+};
+var loaded = {};
+var current = null;
+var dashboard = document.getElementById('dashboard');
+var appview = document.getElementById('appview');
+var appframe = document.getElementById('appframe');
+var appTitle = document.getElementById('appTitle');
+var loader = document.getElementById('loader');
+
+function openApp(key) {
+  var app = APPS[key];
+  if (!app) return;
+  dashboard.hidden = true;
+  appview.hidden = false;
+  appTitle.textContent = app.title;
+  if (current !== key) {
+    loader.style.display = 'flex';
+    appframe.src = app.url;
+    current = key;
+  } else {
+    loader.style.display = 'none'; // same app dobara — data mehfooz, reload nahi
+  }
+  window.scrollTo(0, 0);
+}
+function goBack() {
+  appview.hidden = true;
+  dashboard.hidden = false;
+  window.scrollTo(0, 0);
+}
+document.getElementById('card-aluminium').addEventListener('click', function(){ openApp('aluminium'); });
+document.getElementById('card-glass').addEventListener('click', function(){ openApp('glass'); });
+document.getElementById('card-bill').addEventListener('click', function(){ openApp('bill'); });
+document.getElementById('backBtn').addEventListener('click', goBack);
+appframe.addEventListener('load', function(){ loader.style.display = 'none'; });
+// Android back button jaisa behavior: app khuli ho to pehle dashboard pe wapas
+window.addEventListener('popstate', function(){ if (!appview.hidden) goBack(); });
+if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(function(){}); }
+</script>
+</body>
+</html>
